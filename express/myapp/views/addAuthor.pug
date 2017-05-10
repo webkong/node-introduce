@@ -1,0 +1,33 @@
+extends layout
+
+block content
+  h1= title
+  
+  label 作者
+  input.author(
+    type="text"
+    name="author"
+  )
+  
+  - var name = '添加'
+  button.add #{name}
+  p.back back
+
+  script(type='text/javascript').
+    $('.add').click(function(){
+      var name = $('.author').val();
+      console.log(name);
+      $.ajax({
+        type: "POST",
+        url: '/book/addAuthor',
+        data: {
+          name: name
+        },
+        success: function(data){
+          console.log(data);
+          $('.back').html(JSON.stringify(data));
+        },
+        dataType: 'json'
+      });
+    });
+  
